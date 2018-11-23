@@ -1,0 +1,41 @@
+public void Quicksort(int []array,int start,int end)
+    {
+        int i=start;
+        int j=end;
+        int pivot=array[start+(end-start)/2];
+        while(i<=j)
+        {
+            while(array[i]<pivot)
+            {
+                i++;
+            }
+            while(array[j]>pivot)
+            {
+                j--;
+            }
+            if(i<=j)
+            {
+                int temp=array[i];
+                array[i]=array[j];
+                array[j]=temp;
+                i++;
+                j--;
+            }
+        }
+        if(start<j)
+        {
+            Quicksort(array,start,j);
+        }
+        if(i<end)
+        {
+           Quicksort(array,i,end);
+        }
+    }
+    public void quick(int []array)
+    {
+        Quicksort(array,0,array.length-1);
+        for(int i=0;i<array.length;i++)
+        {
+            System.out.println("Webname: "+array[i]+" Webcount: "+array[i]);
+        }
+    }

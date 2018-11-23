@@ -1,0 +1,126 @@
+int size;
+    int [] maxheap;
+    int position;
+    public Heap(int s)
+    {
+        size=s;
+        maxheap=new int[size+1];
+        position=0;
+        
+    }
+    public void createHeap(int[] arr)
+    {
+        if(arr.length>0)
+        {
+            for(int i=1;i<arr.length;i++)
+            {
+                insert(arr[i]);
+            }
+        }
+    }
+    public void insert(int x)
+    {
+        maxheap[position]=x;
+        position++;
+        maxHeapifyup();
+    }
+    public void maxHeapifyup()
+    {
+        int Position=position-1;
+        while (maxheap[Position/2] < maxheap[Position] && Position>0)
+        {
+            int Small=maxheap[Position/2];
+            maxheap[Position/2]=maxheap[Position];
+            maxheap[Position]=Small;
+            Position=Position/2;
+        }
+    }
+    public void Display()
+    {
+        for (int i=0;i<position;i++)
+        {
+            System.out.print(maxheap[i]+" ");
+        }
+    }
+    public void delete()
+    {
+        position--;
+        int Last=position;
+        maxheap[0]=maxheap[Last];
+        maxHeapifydown(0,position);
+    }
+    public void maxHeapifydown(int Pos1,int Size)
+    {
+        int Big=Pos1;
+        if (2*Pos1+2<position && maxheap[Pos1]<maxheap[Pos1*2+2] && maxheap[Big]<maxheap[Pos1*2+2])
+        {
+            Big=Pos1*2+2;
+        }
+        if (2*Pos1+1<position && maxheap[Pos1]<maxheap[Pos1*2+1])
+        {
+            Big=Pos1*2+1;
+        }
+        if (Big!=Pos1)
+        {
+            if (Big<Size)
+            {
+                swap(Pos1,Big);
+                maxHeapifydown(Big,Size);
+            }
+        }
+    }
+    public void swap(int pos1,int pos2)
+    {
+        int temp= maxheap[pos2];
+        maxheap[pos2]=maxheap[pos1];
+        maxheap[pos1]=temp;
+    }
+    public boolean MaxHeap ()
+    {
+        int Index=0;
+        while (Index<position/2)
+        {
+            if (Index*2+1<maxheap.length)
+            {
+                if (maxheap[Index]<maxheap[2*Index+1])
+                {
+                    return false;
+                }
+            }
+            if (Index*2<maxheap.length)
+            {
+                if (maxheap[Index]<maxheap[2*Index+1])
+                {
+                    return false;
+                }
+            }
+            Index++;
+        }
+        return true;
+    }
+    public boolean CompleteBT()
+    {
+        int Index=0;
+        while(Index<position)
+        {
+            if (Index*2<position && Index*2+1<position)
+            {
+                if (maxheap[Index*2]==0&&maxheap[Index*2+1]!=0)
+                {
+                    return false;
+                }
+            }
+            Index++;
+        }
+        return true;
+    }
+    public void Sort()
+    {
+        int ind=position-1;
+        while (ind>=0)
+        {
+            swap(0,ind);
+            maxHeapifydown(0,ind);
+            ind--;
+        }
+    }

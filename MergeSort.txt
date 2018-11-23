@@ -1,0 +1,45 @@
+public void merge(int[]array)
+    {
+        mergesort(array,0,array.length);
+        for(int i=0;i<array.length;i++)
+        {
+            System.out.println("Webcount: "+array[i]);
+        }
+    }
+    public void mergesort(int[]array,int start,int end)
+    {
+        int N=end-start;
+        if(N<=1)
+        {
+            return;
+        }
+        int mid=start+N/2;
+        mergesort(array,start,mid);
+        mergesort(array,mid,end);
+        int i=start;
+        int j=mid;
+        int[]temp=new int[N];
+        for(int k=0;k<N;k++)
+        {
+            if(i==mid)
+            {
+                temp[k]=array[j++];
+            }
+            else if(j==end)
+            {
+                temp[k]=array[i++];
+            }
+            else if(array[j]<array[i])
+            {
+                temp[k]=array[j++];
+            }
+            else
+            {
+                temp[k]=array[i++];
+            }
+        }
+        for(int p=0;p<N;p++)
+        {
+            array[start+p]=temp[p];
+        }
+    }

@@ -1,0 +1,93 @@
+int size;
+    int [] minheap;
+    int position;
+    public SHeap(int s)
+    {
+        size=s;
+        minheap=new int[size+1];
+        position=0;
+        
+    }
+    public void createHeap(int[] arr)
+    {
+        if(arr.length>0)
+        {
+            for(int i=1;i<arr.length;i++)
+            {
+                insert(arr[i]);
+            }
+        }
+    }
+    public void insert(int x)
+    {
+        if(position+1<minheap.length)
+        {
+            minheap[position]=x;
+            position++;
+            minHeapifyup();
+        }
+        else
+        {
+            int [] temp=new int[position+2];
+            for(int i=0;i<position;i++)
+            {
+                temp[i]=minheap[i];
+            }
+            temp[position]=x;
+            position++;
+            minheap=null;
+            minheap=temp;
+            minHeapifyup();
+        }
+    }
+    public void minHeapifyup()
+    {
+        int Position=position-1;
+        while (minheap[Position/2] > minheap[Position] && Position>0)
+        {
+            int Small=minheap[Position/2];
+            minheap[Position/2]=minheap[Position];
+            minheap[Position]=Small;
+            Position=Position/2;
+        }
+    }
+    public void Display()
+    {
+        for (int i=0;i<position;i++)
+        {
+            System.out.print(minheap[i]+" ");
+        }
+    }
+    public void delete()
+    {
+        position--;
+        int Last=position;
+        minheap[0]=minheap[Last];
+        maxHeapifydown(0,position);
+    }
+    public void maxHeapifydown(int Pos1,int Size)
+    {
+        int Big=Pos1;
+        if (2*Pos1+2<position && minheap[Pos1]<minheap[Pos1*2+2] && minheap[Big]<minheap[Pos1*2+2])
+        {
+            Big=Pos1*2+2;
+        }
+        if (2*Pos1+1<position && minheap[Pos1]<minheap[Pos1*2+1])
+        {
+            Big=Pos1*2+1;
+        }
+        if (Big!=Pos1)
+        {
+            if (Big<Size)
+            {
+                swap(Pos1,Big);
+                maxHeapifydown(Big,Size);
+            }
+        }
+    }
+    public void swap(int pos1,int pos2)
+    {
+        int temp= minheap[pos2];
+        minheap[pos2]=minheap[pos1];
+        minheap[pos1]=temp;
+    }
